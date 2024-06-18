@@ -12,20 +12,8 @@ function getComputerChoice() {
 
 
 
-function getHumanChoice() {
-    let choice = prompt("Enter your choice. Rock, paper, or scissors?")
-    choice = choice.toLowerCase();
-    if (choice === "rock" ) {
-        return choice;
-    } if (choice === "paper") {
-        return choice;
-    } if (choice === "scissors") {
-        return choice;
-    } else {
-        alert("Incorrect input! Try again.")
-        getHumanChoice()
-    }
-}
+
+
 
 let humanScore = 0;
 let computerScore = 0;
@@ -34,40 +22,54 @@ function playRound(humanChoice, computerChoice) {
     // Convert the humanChoice to lowercase to make it case-insensitive
     humanChoice = humanChoice.toLowerCase();
 
+    let resultMessage ="";
+
     // Determine the winner based on the choices
     if (humanChoice === "rock") {
         if (computerChoice === "paper") {
-            console.log("You lose! Paper beats Rock");
+            resultMessage ="You lose! Paper beats Rock";
             computerScore++;
         } else if (computerChoice === "scissors") {
-            console.log("You win! Rock beats Scissors");
+            resultMessage="You win! Rock beats Scissors";
             humanScore++;
         } else {
-            console.log("It's a tie! Both chose Rock");
+            resultMessage = "It's a tie! Both chose Rock";
         }
     } else if (humanChoice === "paper") {
         if (computerChoice === "rock") {
             console.log("You win! Paper beats Rock");
             humanScore++;
         } else if (computerChoice === "scissors") {
-            console.log("You lose! Scissors beats Paper");
+            resultMessage ="You lose! Scissors beats Paper";
             computerScore++;
         } else {
-            console.log("It's a tie! Both chose Paper");
+            resultMessage ="It's a tie! Both chose Paper";
         }
     } else if (humanChoice === "scissors") {
         if (computerChoice === "rock") {
-            console.log("You lose! Rock beats Scissors");
+            resultMessage ="You lose! Rock beats Scissors";
             computerScore++;
         } else if (computerChoice === "paper") {
-            console.log("You win! Scissors beats Paper");
+            resultMessage ="You win! Scissors beats Paper";
             humanScore++;
         } else {
-            console.log("It's a tie! Both chose Scissors");
+            resultMessage ="It's a tie! Both chose Scissors";
         }
     } else {
-        console.log("Invalid choice! Please choose 'rock', 'paper', or 'scissors'.");
+        resultMessage ="Invalid choice! Please choose 'rock', 'paper', or 'scissors'.";
     }
+
+    const resultDiv = document.getElementById("results");
+    resultDiv.textContent = resultMessage;
+
+    const humanDiv = document.getElementById("humanScore");
+    humanDiv.textContent = `Your score: ${humanScore}`;
+
+    const computerDiv = document.getElementById("computerScore");
+    computerDiv.textContent = `Computer score: ${computerScore}`;
+
+
+
 }
 
 function playGame() {
@@ -77,11 +79,38 @@ function playGame() {
         playRound(humanChoice, computerChoice);
     }
 
+    const gameResultDiv = document.getElementById("game-result");
+
     if (computerScore > humanScore) {
-        console.log("Computer wins!");
+        gameResultDiv.textContent =  "Computer wins!";
     } else if (humanScore > computerScore) {
-        console.log("You win!");
+        gameResultDiv.textContent = "You win!";
 }
+    humanDiv.textContent = `Your score: ${0}`;
+    computerDiv.textContent = `Your score: ${0}`;
+
 }
 
-console.log(playGame());
+const rock = document.getElementById("rock");
+rock.textContent = "ROCK";
+
+const paper = document.getElementById("paper");
+paper.textContent = "PAPER";
+
+const scissors = document.getElementById("scissors");
+scissors.textContent = "SCISSORS";
+
+rock.addEventListener("click", () => {
+    playRound("rock", getComputerChoice());
+});
+
+paper.addEventListener("click", () => {
+    playRound("paper", getComputerChoice());
+});
+
+scissors.addEventListener("click", () => {
+    playRound("scissors", getComputerChoice());
+});
+
+
+playGame();
